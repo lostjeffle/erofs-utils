@@ -16,6 +16,7 @@ TESTS_ENVIRONMENT = \
 		mkdir -p $$RESULT_DIR 2>/dev/null; \
 	fi; \
 	[ -z $$MKFS_EROFS_PROG ] && export MKFS_EROFS_PROG=../mkfs/mkfs.erofs; \
+	[ -z $$FSCK_EROFS_PROG ] && export FSCK_EROFS_PROG=../fsck/fsck.erofs; \
 	[ -z $$EROFSFUSE_PROG ] && export EROFSFUSE_PROG=../fuse/erofsfuse;
 
 if ENABLE_LZ4

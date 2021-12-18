@@ -129,6 +129,8 @@ _scratch_mkfs()
 	cat $tmp.mkfserr >&2
 	rm -f $tmp.mkfserr $tmp.mkfsstd
 
+	# check the integrity of the generated image.
+	[ $mkfs_status -eq 0 ] && $FSCK_EROFS_PROG --extract $SCRATCH_DEV || return 1
 	return $mkfs_status
 }
 
