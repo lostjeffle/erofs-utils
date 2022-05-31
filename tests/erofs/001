@@ -24,7 +24,7 @@ if [ -z $SCRATCH_DEV ]; then
 fi
 
 MKFS_OPTIONS="$MKFS_OPTIONS -zunknownalg"
-_scratch_mkfs $here/../lib && \
+_scratch_mkfs $here/../lib >> $seqres.full 2>&1 && \
 	_fail "successfully mkfs with invalid algorithm"
 
 echo Silence is golden

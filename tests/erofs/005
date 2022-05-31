@@ -30,12 +30,12 @@ mkdir -p $localdir
 # create pipe
 mknod $localdir/pipefile p
 
-_scratch_mkfs $localdir || _fail "failed to mkfs"
+_scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
 
 # test pipe files
 _require_erofs
 
-_scratch_mount 2>>$seqres.full
+_scratch_mount
 
 ttypefifo='fifo:0,0'
 

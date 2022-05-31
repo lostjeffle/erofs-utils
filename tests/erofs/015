@@ -32,13 +32,14 @@ head -c 4032 /dev/urandom > $localdir/1
 head -c 4095 /dev/urandom > $localdir/2
 head -c 12345 /dev/urandom > $localdir/3  # arbitrary size
 
-_scratch_mkfs -Eforce-inode-compact $localdir || _fail "failed to mkfs"
+_scratch_mkfs -Eforce-inode-compact $localdir >> $seqres.full 2>&1 \
+	|| _fail "failed to mkfs"
 
 # verify the uncompressed image
 _require_erofs
 _require_fssum
 
-_scratch_mount 2>>$seqres.full
+_scratch_mount
 
 FSSUM_OPTS="-MAC"
 [ $FSTYP = "erofsfuse" ] && FSSUM_OPTS="${FSSUM_OPTS}T"

@@ -33,14 +33,14 @@ mkdir -p $localdir/d1
 mkdir $localdir/d2
 $MOUNT_PROG -obind $localdir/d1 $localdir/d2
 
-_scratch_mkfs $localdir || _fail "failed to mkfs"
+_scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
 
 $UMOUNT_PROG $localdir/d2
 
 # check if it's a hardlinked directory
 _require_erofs
 
-_scratch_mount 2>>$seqres.full
+_scratch_mount
 
 [ "x`stat -c %i $SCRATCH_MNT/d1`" = "x`stat -c %i $SCRATCH_MNT/d2`" ] && \
 	_fail "-> hardlinked directory detected"

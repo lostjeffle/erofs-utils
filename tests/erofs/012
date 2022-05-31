@@ -35,12 +35,12 @@ touch $localdir/d1/a
 ln $localdir/d1/a $localdir/d2/a
 ln $localdir/d1/a $localdir/d2/d3/a
 
-_scratch_mkfs $localdir || _fail "failed to mkfs"
+_scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
 
 # check i_nlink count is expected
 _require_erofs
 
-_scratch_mount 2>>$seqres.full
+_scratch_mount
 
 [ `stat -c %h $SCRATCH_MNT` -eq 4 -a \
   `stat -c %h $SCRATCH_MNT/d1` -eq 2 -a \

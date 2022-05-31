@@ -34,12 +34,12 @@ FNAME="$FNAME4/$FNAME4/$FNAME4/$FNAME4"
 
 ln -s $FNAME $localdir/symlink
 
-_scratch_mkfs $localdir || _fail "failed to mkfs"
+_scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
 
 # test long symlink (non-fast symlink)
 _require_erofs
 
-_scratch_mount 2>>$seqres.full
+_scratch_mount
 
 MD5='a487a80b24d56a83b952fa70ff961297'
 realmd5=$(readlink $SCRATCH_MNT/symlink | tr -d '\n' | md5sum | cut -d' ' -f1)
