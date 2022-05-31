@@ -1,5 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0+
+#
+# check if cross-device submounts are handled properly
+#
 seq=`basename $0`
 seqres=$RESULT_DIR/$seq
 
@@ -11,6 +14,8 @@ cleanup()
 	cd /
 	rm -rf $tmp.*
 }
+
+_require_erofs
 
 # remove previous $seqres.full before test
 rm -f $seqres.full
@@ -41,16 +46,12 @@ $MKFS_EROFS_PROG $MKFS_OPTIONS $tmg1 $tds >> $seqres.full 2>&1
 cp $tmg1 $tmg2
 
 mkdir -p $tdd1 $tdd2
-$MOUNT_PROG -t erofs -o loop $tmg1 $tdd1 || \
-	_notrun "kernel must supports erofs, skipped."
+$MOUNT_PROG -t erofs -o loop $tmg1 $tdd1
 $MOUNT_PROG -t erofs -o loop $tmg2 $tdd2
 _scratch_mkfs $localdir/d >> $seqres.full 2>&1 || _fail "failed to mkfs"
 
 $UMOUNT_PROG $tdd1
 $UMOUNT_PROG $tdd2
-
-# test if it handles cross-device sub-mount improperly
-_require_erofs
 
 _scratch_mount
 

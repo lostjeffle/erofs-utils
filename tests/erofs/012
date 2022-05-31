@@ -1,5 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0+
+#
+# check the hard-link functionality
+#
 seq=`basename $0`
 seqres=$RESULT_DIR/$seq
 
@@ -11,6 +14,8 @@ cleanup()
 	cd /
 	rm -rf $tmp.*
 }
+
+_require_erofs
 
 # remove previous $seqres.full before test
 rm -f $seqres.full
@@ -36,12 +41,9 @@ ln $localdir/d1/a $localdir/d2/a
 ln $localdir/d1/a $localdir/d2/d3/a
 
 _scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
-
-# check i_nlink count is expected
-_require_erofs
-
 _scratch_mount
 
+# check i_nlink count is expected
 [ `stat -c %h $SCRATCH_MNT` -eq 4 -a \
   `stat -c %h $SCRATCH_MNT/d1` -eq 2 -a \
   `stat -c %h $SCRATCH_MNT/d2` -eq 4 -a \

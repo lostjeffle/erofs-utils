@@ -1,5 +1,8 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0+
+#
+# verify the uncompressed image with 2-level random files
+#
 seq=`basename $0`
 seqres=$RESULT_DIR/$seq
 
@@ -11,6 +14,9 @@ cleanup()
 	cd /
 	rm -rf $tmp.*
 }
+
+_require_erofs
+_require_fssum
 
 # remove previous $seqres.full before test
 rm -f $seqres.full
@@ -41,13 +47,9 @@ done
 unset IFS
 
 _scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
-
-# verify the uncompressed image
-_require_erofs
-_require_fssum
-
 _scratch_mount
 
+# verify the uncompressed image
 FSSUM_OPTS="-MAC"
 [ $FSTYP = "erofsfuse" ] && FSSUM_OPTS="${FSSUM_OPTS}T"
 

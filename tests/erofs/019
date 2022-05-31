@@ -1,5 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0+
+#
+# 019 - check extended attribute functionality
+#
 seq=`basename $0`
 seqres=$RESULT_DIR/$seq
 
@@ -11,6 +14,8 @@ cleanup()
 	cd /
 	rm -rf $tmp.*
 }
+
+_require_erofs
 
 # remove previous $seqres.full before test
 rm -f $seqres.full
@@ -41,11 +46,9 @@ for d in $dirs; do
 done
 
 _scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
-_require_erofs
-
-# check xattrs
 _scratch_mount
 
+# check xattrs
 for d in $dirs; do
 	xattr1=`getfattr --absolute-names -d $localdir/$d | tail -n+2`
 	xattr2=`getfattr --absolute-names -d $SCRATCH_MNT/$d | tail -n+2`

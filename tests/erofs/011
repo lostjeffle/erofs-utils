@@ -1,5 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0+
+#
+# (legacy image) verify lz4hc compressed image
+#
 seq=`basename $0`
 seqres=$RESULT_DIR/$seq
 
@@ -11,6 +14,9 @@ cleanup()
 	cd /
 	rm -rf $tmp.*
 }
+
+_require_erofs
+_require_fssum
 
 # remove previous $seqres.full before test
 rm -f $seqres.full
@@ -43,11 +49,6 @@ unset IFS
 
 MKFS_OPTIONS="${MKFS_OPTIONS} -E legacy-compress -zlz4hc"
 _scratch_mkfs $localdir >> $seqres.full 2>&1 || _fail "failed to mkfs"
-
-# verify lz4hc compressed image
-_require_erofs
-_require_fssum
-
 _scratch_mount
 
 FSSUM_OPTS="-MAC"
