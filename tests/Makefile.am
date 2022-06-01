@@ -90,6 +90,9 @@ endif
 # 001 - check inline/non-inline/multidev layout in fscache mode
 TESTS += fscache/001
 
+# 001 - test error path handling when OPEN request fails
+TESTS += fscache/002
+
 EXTRA_DIST = common/rc erofs fscache
 
 clean-local: clean-local-check
