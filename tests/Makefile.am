@@ -30,64 +30,67 @@ if ENABLE_LIBLZMA
 TESTS_ENVIRONMENT += export lzma_on=1;
 endif
 
-# 001 - test if unknown algorithm is specificed
-TESTS += erofs/001
+## 001 - test if unknown algorithm is specificed
+#TESTS += erofs/001
+#
+## 002 - mkfs & test short symlink (fast symlink)
+#TESTS += erofs/002
+#
+## 003 - mkfs & test long symlink (non-fast symlink)
+#TESTS += erofs/003
+#
+## 004 - mkfs & test character/block device
+#TESTS += erofs/004
+#
+## 005 - mkfs & test pipe
+#TESTS += erofs/005
+#
+## 006 - verify the uncompressed image
+#TESTS += erofs/006
+#
+## 007 - check for bad lz4 versions
+#TESTS += erofs/007
+#
+## 008 - verify lz4 compressed image
+#TESTS += erofs/008
+#
+## 009 - verify lz4hc compressed image
+#TESTS += erofs/009
+#
+## 010 - (legacy image) verify lz4 compressed image
+#TESTS += erofs/010
+#
+## 011 - (legacy image) verify lz4hc compressed image
+#TESTS += erofs/011
+#
+## 012 - check the hard-link functionality
+#TESTS += erofs/012
+#
+## 013 - check if hardlinked directories are allowed
+#TESTS += erofs/013
+#
+## 014 - check if cross-device submounts are handled properly
+#TESTS += erofs/014
+#
+## 015 - regression test for battach on full buffer block
+#TESTS += erofs/015
+#
+## 016 - verify the uncompressed image with 2-level random files
+#TESTS += erofs/016
+#
+## 017 - check the compress-hints functionality
+#TESTS += erofs/017
+#
+## 018 - verify lzma compressed image
+#TESTS += erofs/018
+#
+## 019 - check extended attribute functionality
+#TESTS += erofs/019
 
-# 002 - mkfs & test short symlink (fast symlink)
-TESTS += erofs/002
+# 001 - check inline/non-inline/multidev layout in fscache mode
+TESTS += fscache/001
 
-# 003 - mkfs & test long symlink (non-fast symlink)
-TESTS += erofs/003
-
-# 004 - mkfs & test character/block device
-TESTS += erofs/004
-
-# 005 - mkfs & test pipe
-TESTS += erofs/005
-
-# 006 - verify the uncompressed image
-TESTS += erofs/006
-
-# 007 - check for bad lz4 versions
-TESTS += erofs/007
-
-# 008 - verify lz4 compressed image
-TESTS += erofs/008
-
-# 009 - verify lz4hc compressed image
-TESTS += erofs/009
-
-# 010 - (legacy image) verify lz4 compressed image
-TESTS += erofs/010
-
-# 011 - (legacy image) verify lz4hc compressed image
-TESTS += erofs/011
-
-# 012 - check the hard-link functionality
-TESTS += erofs/012
-
-# 013 - check if hardlinked directories are allowed
-TESTS += erofs/013
-
-# 014 - check if cross-device submounts are handled properly
-TESTS += erofs/014
-
-# 015 - regression test for battach on full buffer block
-TESTS += erofs/015
-
-# 016 - verify the uncompressed image with 2-level random files
-TESTS += erofs/016
-
-# 017 - check the compress-hints functionality
-TESTS += erofs/017
-
-# 018 - verify lzma compressed image
-TESTS += erofs/018
-
-# 019 - check extended attribute functionality
-TESTS += erofs/019
-
-EXTRA_DIST = common/rc erofs
+EXTRA_DIST = common/rc erofs fscache
 
 clean-local: clean-local-check
 .PHONY: clean-local-check
