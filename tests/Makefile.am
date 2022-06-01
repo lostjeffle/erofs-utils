@@ -13,7 +13,8 @@ TESTS_ENVIRONMENT = \
 	fi; \
 	if [ -z $$RESULT_DIR ]; then \
 		export RESULT_DIR=`pwd`/results;	\
-		mkdir -p $$RESULT_DIR 2>/dev/null; \
+		mkdir -p $$RESULT_DIR/erofs 2>/dev/null; \
+		mkdir -p $$RESULT_DIR/fscache 2>/dev/null; \
 	fi; \
 	[ -z $$MKFS_EROFS_PROG ] && export MKFS_EROFS_PROG=../mkfs/mkfs.erofs; \
 	[ -z $$FSCK_EROFS_PROG ] && export FSCK_EROFS_PROG=../fsck/fsck.erofs; \
